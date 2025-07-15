@@ -96,9 +96,21 @@ export default function SimulationPage() {
         setStandings(calculateStandings(rawMatches));
     }, []);
 
+    const regenerateSimulation = () => {
+        const newMatches = generateMatches(mockTeams).map(m =>
+            simulateMatch(m.home, m.away)
+        );
+        setMatches(newMatches);
+        setStandings(calculateStandings(newMatches));
+    };
+
     return (
         <Layout>
             <h2>Simulation - League Format</h2>
+
+            <button onClick={regenerateSimulation} style={{ margin: '1rem 0' }}>
+                🔁 Re-simulate Matches
+            </button>
 
             <Table>
                 <thead>
