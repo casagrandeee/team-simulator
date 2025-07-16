@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import Layout from '../components/Layout';
 import TeamForm from '../components/TeamForm';
+import {loadFromStorage, saveToStorage} from "../utils/storage.js";
 
 export default function TeamsPage() {
-    const [teams, setTeams] = useState([]);
+    const [teams, setTeams] = useState(() => loadFromStorage('teams', []));
+
+    useEffect(() => {
+        saveToStorage('teams', teams);
+    })
 
     const handleAddTeam = (newTeam) => {
         setTeams([...teams, newTeam]);
